@@ -7,7 +7,7 @@ let total = 0;
 
 cart.forEach(function(product, index){
 
-total += product.price;
+total += product.price * (product.qty || 1);
 
 clutter += `
 
@@ -16,11 +16,11 @@ clutter += `
 <div class="row align-items-center">
 
 <div class="col-md-2">
-<img src="${product.thumbnail}" class="img-fluid">
+<img src="${product.thumbnail || 'https://via.placeholder.com/100'}" class="img-fluid">
 </div>
 
 <div class="col-md-6">
-<h5>${product.title}</h5>
+<h5>${product.title || product.name}</h5>
 </div>
 
 <div class="col-md-2">
@@ -41,7 +41,11 @@ Remove
 
 });
 
+if(cart.length === 0){
+container.innerHTML = "<h4>Your cart is empty</h4>";
+}else{
 container.innerHTML = clutter;
+}
 
 document.getElementById("cart-total").innerText = total;
 
